@@ -16,16 +16,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    Auth::guard('api')->user();
 
-    return Auth::guard('api')->user();
+return 'ok';
+    //return Auth::guard('api')->user()->id;
 });
 
 
 // Route::post('/register', 'UserController@authenticate');
-///*Route::post('register', 'UserController@register');
+Route::post('register', 'UserController@register');
 
-//Route::post('login','Auth\UserLoginController@login');
+Route::post('login','Auth\UserLoginController@login');
 //Route::post('logout', 'Auth\LoginController@logout');*/
 
 

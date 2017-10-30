@@ -37,7 +37,10 @@ class UserLoginController extends Controller
         $this->validateLogin($request);
 
         if ($this->attemptLogin($request)) {
-            $user = $this->guard()->user();
+            $user = $this->guard('api')->user();
+
+            // var_dump($user);
+
             $user->generateToken();
 
             return response()->json([
