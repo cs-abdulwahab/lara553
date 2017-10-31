@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth;
-use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,9 +16,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::apiResource('teacher', 'TeacherController');
+
+
+
+
+
+
+
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
 
-return 'ok';
+    return 'ok';
     //return Auth::guard('api')->user()->id;
 });
 
@@ -25,18 +35,31 @@ return 'ok';
 // Route::post('/register', 'UserController@authenticate');
 Route::post('register', 'UserController@register');
 
-Route::post('login','Auth\UserLoginController@login');
+Route::post('login', 'Auth\UserLoginController@login');
 //Route::post('logout', 'Auth\LoginController@logout');*/
 
 
 Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
     //    Route::resource('task', 'TasksController');
     Route::apiResource('hostel', 'HostelController');
-   // Route::apiResource('faculty', 'FacultyController');
+    // Route::apiResource('faculty', 'FacultyController');
+    Route::apiResource('device', 'DeviceController');
 
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
     #adminlte_api_routes
 });
+
+Route::apiResource('user', 'UserController');
+
+
+
+
+
+
+
+
+
+
 /*
 Route::apiResource('survey', 'SurveyController');
 Route::apiResource('survey.question', 'QuestionController');

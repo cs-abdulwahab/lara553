@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+
     use Notifiable;
 
 
@@ -29,13 +30,15 @@ class User extends Authenticatable
     ];
 
 
-
-
-    protected function devices()
+    public function sensorReadings()
     {
+        return $this->hasManyThrough(SensorData::class, Device::class);
+    }
 
+
+    public function devices()
+    {
         return $this->hasMany(Device::class);
-
     }
 
 
