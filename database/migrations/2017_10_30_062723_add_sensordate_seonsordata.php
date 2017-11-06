@@ -14,7 +14,7 @@ class AddSensordateSeonsordata extends Migration
     public function up()
     {
         Schema::table('sensor_datas', function (Blueprint $table) {
-            $table->dateTime('sensor_dt');
+            // $table->dateTime('sensor_dt');
         });
     }
 
@@ -26,7 +26,7 @@ class AddSensordateSeonsordata extends Migration
     public function down()
     {
         Schema::table('sensor_datas', function (Blueprint $table) {
-            $table->dropColumn('sensor_dt');
+           //  $table->dropColumn('sensor_dt');
         });
     }
 }

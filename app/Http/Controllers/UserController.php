@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 class UserController extends Controller
@@ -18,6 +19,8 @@ class UserController extends Controller
 
     public function index()
     {
+
+
         return User::all();
     }
 
@@ -47,6 +50,8 @@ class UserController extends Controller
     {
         $this->validator($request->all())->validate();
         event(new Registered($user = $this->create($request->all())));
+
+
 
         //   $this->guard('api')->login($user);
 

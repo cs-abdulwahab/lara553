@@ -17,6 +17,7 @@ $factory->define(App\Device::class, function (Faker $faker) {
     $users = User::pluck('id')->toArray();
 
 
+
     return [
         'devicekey' => str_random(25),
         'name' => $faker->name(),

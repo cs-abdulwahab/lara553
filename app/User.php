@@ -7,11 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-
     use Notifiable;
-
-
-    /**
+   /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -19,7 +16,6 @@ class User extends Authenticatable
     protected $fillable = [
         'username', 'name', 'email', 'password',
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -29,11 +25,9 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-
     public function roles()
     {
-
-        return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class , 'role_user');
     }
 
     public function sensorReadings()

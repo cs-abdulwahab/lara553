@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth;
 
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\SensorDataController;
+use App\SensorData;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -45,18 +46,27 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
 });
 
 Route::apiResource('user', 'UserController');
+Route::get('bus', 'BusController@index');
 
 Route::apiResource('student', 'StudentController')->middleware('auth:api');
 
 
+Route::post('home', function () {
+
+    $request = request()->all();
+
+    return SensorData::create(['temp' => $request['t'], 'humidity' => $request['h'], 'device_id' => 33]);
+});
+
+Route::apiResource('survey', 'SurveyController');
 
 
-
-
+Route::get('intrusion', 'IntrusionController@index');
+Route::get('intrusion/{intrusion}', 'IntrusionController@show');
 
 
 /*
-Route::apiResource('survey', 'SurveyController');
+
 Route::apiResource('survey.question', 'QuestionController');
 
 
