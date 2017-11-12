@@ -11,12 +11,13 @@ use Illuminate\Support\Facades\Auth;
 class UserLoginController extends Controller
 {
     use AuthenticatesUsers;
-/*
-    //Custom guard
-    protected function guard()
-    {
-        return Auth::guard('token');
-    }*/
+
+    /*
+        //Custom guard
+        protected function guard()
+        {
+            return Auth::guard('token');
+        }*/
 
 
     public function username()
@@ -38,14 +39,9 @@ class UserLoginController extends Controller
 
         if ($this->attemptLogin($request)) {
             $user = $this->guard('api')->user();
-
-            // var_dump($user);
-
             $user->generateToken();
 
-            return response()->json([
-                'data' => $user->toArray(),
-            ]);
+            return $user;
         }
 
         return $this->sendFailedLoginResponse($request);

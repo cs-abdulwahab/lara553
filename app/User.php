@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
-   /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -27,7 +27,7 @@ class User extends Authenticatable
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class , 'role_user');
+        return $this->belongsToMany(Role::class, 'role_user')->withPivot(['isactive']);
     }
 
     public function sensorReadings()
@@ -40,6 +40,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Device::class);
     }
+
+
 
 
     public function generateToken()

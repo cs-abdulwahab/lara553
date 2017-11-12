@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\SensorData;
+use App\Bus;
 use Illuminate\Http\Request;
 
-class SensorDataController extends Controller
+class BusController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class SensorDataController extends Controller
      */
     public function index()
     {
-        //
+        return Bus::all();
     }
 
     /**
@@ -30,21 +30,21 @@ class SensorDataController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        return SensorData::create(['temp' => $request->get('t'), 'humidity' => $request->get('h'), 'device_id' => 33]);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\SensorData $sensorData
+     * @param  \App\Bus  $bus
      * @return \Illuminate\Http\Response
      */
-    public function show(SensorData $sensorData)
+    public function show(Bus $bus)
     {
         //
     }
@@ -52,10 +52,10 @@ class SensorDataController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\SensorData $sensorData
+     * @param  \App\Bus  $bus
      * @return \Illuminate\Http\Response
      */
-    public function edit(SensorData $sensorData)
+    public function edit(Bus $bus)
     {
         //
     }
@@ -63,11 +63,11 @@ class SensorDataController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\SensorData $sensorData
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Bus  $bus
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SensorData $sensorData)
+    public function update(Request $request, Bus $bus)
     {
         //
     }
@@ -75,10 +75,10 @@ class SensorDataController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\SensorData $sensorData
+     * @param  \App\Bus  $bus
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SensorData $sensorData)
+    public function destroy(Bus $bus)
     {
         //
     }

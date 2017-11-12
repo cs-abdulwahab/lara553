@@ -1,5 +1,6 @@
 <?php
 
+use App\Device;
 use App\Http\Controllers\Auth;
 
 use App\Http\Controllers\DeviceController;
@@ -29,7 +30,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 // Route::post('/register', 'UserController@authenticate');
 Route::post('register', 'UserController@register');
-
 Route::post('login', 'Auth\UserLoginController@login');
 //Route::post('logout', 'Auth\LoginController@logout');*/
 
@@ -38,31 +38,30 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
     //  Route::resource('task', 'TasksController');
     //  Route::apiResource('hostel', 'HostelController');
     //  Route::apiResource('faculty', 'FacultyController');
-    Route::apiResource('device', 'DeviceController');
-    Route::apiResource('device.sensordata', 'SensorDataController');
 
+    Route::get('device/{device}/currenttemp', 'DeviceSensorDataController@currenttemp');
+
+    Route::get('user/{user}/device1/', 'UserDeviceController@index1');
+
+    Route::apiResource('device', 'DeviceController');
+    Route::apiResource('user.device', 'UserDeviceController');
+    Route::apiResource('device.sensordata', 'DeviceSensorDataController');
     //Please do not remove this if you want adminlte:route and adminlte:link commands to works correctly.
     #adminlte_api_routes
 });
 
+
 Route::apiResource('user', 'UserController');
-Route::get('bus', 'BusController@index');
+//Route::get('bus', 'BusController@index');
 
-Route::apiResource('student', 'StudentController')->middleware('auth:api');
+//Route::apiResource('student', 'StudentController')->middleware('auth:api');
 
-
-Route::post('home', function () {
-
-    $request = request()->all();
-
-    return SensorData::create(['temp' => $request['t'], 'humidity' => $request['h'], 'device_id' => 33]);
-});
 
 Route::apiResource('survey', 'SurveyController');
-
+/*
 
 Route::get('intrusion', 'IntrusionController@index');
-Route::get('intrusion/{intrusion}', 'IntrusionController@show');
+Route::get('intrusion/{intrusion}', 'IntrusionController@show');*/
 
 
 /*

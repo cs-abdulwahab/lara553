@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
 
-class DeviceResource extends Resource
+class SensorDataResource extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -14,14 +14,6 @@ class DeviceResource extends Resource
      */
     public function toArray($request)
     {
-
-        return [
-            'id' => $this->id,
-            'devicekey' => $this->device_key,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-        ];
-
-
+        return parent::toArray($request);
     }
 }
