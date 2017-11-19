@@ -52,6 +52,7 @@ class SensorEvent implements ShouldBroadcast
     public function broadcastWith()
     {
         //   TODO:  I actually wanted to send the object
+        //TODO : Edit  and now instead of last data of one device send latest data of all devices
         //   return [  $this->sensordata];
         return [$this->sendata];
     }
