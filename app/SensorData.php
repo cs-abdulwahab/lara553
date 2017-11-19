@@ -18,6 +18,9 @@ class SensorData extends Model
     protected $fillable = ['temp', 'humidity', 'sensor_dt'];
 
 
+
+
+
     public function device()
     {
         return $this->belongsTo(Device::class);
