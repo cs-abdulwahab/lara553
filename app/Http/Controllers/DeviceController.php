@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Device;
 use App\Exceptions\SampleException;
+use App\Http\Resources\DeviceResourceCollection;
 use App\User;
 use http\Exception;
 use Illuminate\Http\Request;
@@ -19,9 +20,7 @@ class DeviceController extends Controller
     public function __construct()
     {
         $this->user = Auth::guard('api')->user();
-
     }
-
 
     /**
      * Display a listing of the resource.
@@ -31,6 +30,16 @@ class DeviceController extends Controller
     public function index()
     {
         return Device::all();
+    }
+
+    public function allDevicesSensorData(Request $request)
+    {
+
+        $user = Auth::user();
+
+        //TODO:  Return all devices of the user along with their latest temp values
+        return new DeviceResourceCollection($user->devices);;
+
     }
 
     /*
@@ -78,7 +87,7 @@ class DeviceController extends Controller
             $d = new Device($request->all());
             return $user->devices()->save($d);
 
-        }  else {
+        } else {
 
             //  Check out the methods below and generate appropriate response
             //  entering  already added device   by   same user
