@@ -8,10 +8,13 @@
         "php": ">=7.0.0",
         "acacha/admin-lte-template-laravel": "^5.0",
         "barryvdh/laravel-ide-helper": "^2.4",
+        "consoletvs/charts": "5.*",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "psy/psysh": "0.8.11",
+        "pusher/pusher-http-laravel": "^4.0",
+        "pusher/pusher-php-server": "~3.0",
         "sentry/sentry": "^1.8",
         "spatie/laravel-menu": "^3.0"
     },

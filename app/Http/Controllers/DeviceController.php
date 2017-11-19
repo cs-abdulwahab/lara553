@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Auth;
 
 class DeviceController extends Controller
 {
+    public $user;
+
+    /**
+     * DeviceController constructor.
+     */
+    public function __construct()
+    {
+        $this->user = Auth::guard('api')->user();
+
+    }
 
 
     /**
@@ -50,42 +60,46 @@ class DeviceController extends Controller
      */
     public function store(Request $request)
     {
+        // 'device controller save';
 
-        throw new SampleException;
+        //throw new SampleException;
 
-        // you should validate before storing
+        // TODO: you should validate before storing
 
-        $user = Auth::guard('api')->user();
-        $request->merge(['user_id' => $user->id]);
+        $user = $this->user;
 
-        $d = Device::where('devicekey', $request->devicekey   )->first();
+//        $request->merge(['user_id' => $user->id]);
 
-        if ($d != null) {
-            echo 'condition true';
-        } else {
+        $device = Device::where('devicekey', $request->devicekey)->first();
 
-            echo 'condition false ';
+        //TODO:  Generate appropriate response
+        if ($device == null) {
 
+            $d = new Device($request->all());
+            return $user->devices()->save($d);
+
+        }  else {
+
+            //  Check out the methods below and generate appropriate response
+            //  entering  already added device   by   same user
+            //  entering  already added device   by   Different User
+
+            if (Auth::user()->id == $device->user_id) {
+                return response(['msg' => 'Device Already Existed(1) by you ',
+                    'owner' => $device->user_id,
+                ], 422);
+
+            } else {
+                return response(['msg' => 'Device Already Existed(2) by someone else',
+                    'owner' => $device->user_id,
+                ], 422);
+
+            }
         }
-
-        /*
-
-        try {
-
-            Device::create($request->all());
-
-        } catch (Exception $exception) {
-            // report($exception);
-            // echo $exception->getMessage();
-            //throw new CustomException($exception->getMessage());
-
-            return false;*/
-
-//
 
         $d = Device::where('devicekey', $request->devicekey)->first();
 
-        return $d;
+        // return $d;
 
 
     }
@@ -125,6 +139,11 @@ class DeviceController extends Controller
      */
     public function update(Request $request, Device $device)
     {
+
+        $device->status = $request->status;
+        $device->save();
+        //TODO : if save then  ok else error response
+        return $device;
 
     }
 

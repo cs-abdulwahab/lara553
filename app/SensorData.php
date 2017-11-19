@@ -23,7 +23,6 @@ class SensorData extends Model
         return $this->belongsTo(Device::class);
     }
 
-
     /**
      * @return mixed
      */

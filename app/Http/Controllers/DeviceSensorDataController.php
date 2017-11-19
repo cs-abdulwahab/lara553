@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SensorEvent;
+use App\Http\Resources\SensorDataResource;
+use App\Http\Resources\SensorDataResourceCollection;
 use App\SensorData;
 use Carbon\Carbon;
 use DummyFullModelClass;
 use App\Device;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DeviceSensorDataController extends Controller
 {
@@ -36,17 +41,62 @@ class DeviceSensorDataController extends Controller
     public function index(Device $device)
     {
 
+        $ar = $device->sensordata->take(3)->reverse();
+
+
+        return new SensorDataResourceCollection($ar);
+
+//        dd($ar);
+        //return Collection::unwrap($ar  );
+
+        return $ar;
+        //      return SensorData::where('device_id','33')->get();
+
+
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @param  \App\Device $device
+     * @param SensorData $sensorData
      * @return \Illuminate\Http\Response
      */
-    public function create(Device $device)
+    public function create(SensorData $sensorData)
     {
         //
+    }
+
+    public function home(Request $request, $devicekey)
+    {
+        $device = Device::all()->where('devicekey', $devicekey)->first();
+
+        if ($device != null) {
+
+            if ($device->isActive()) {
+
+                $s = new SensorData($request->all());
+                $s->setSensorDt(Carbon::now()->toDateTimeString());
+
+                $sensorvalues = $device->sensordata()->save($s);
+
+
+                //TODO: on every device save data  SEND data of all the devices
+                event(new SensorEvent(new  SensorDataResource($sensorvalues)));
+
+                return $sensorvalues;
+
+            } else {
+                return ' in some json  device is not active222';
+            }
+
+        } else {
+
+            //TODO : Create a log  that some one has problem in configuring
+            return 'no device exist with this name = ' . $devicekey;
+
+        }
+
+
     }
 
     /**
@@ -59,32 +109,35 @@ class DeviceSensorDataController extends Controller
     public function store(Request $request, Device $device)
     {
 
-        $s = new SensorData($request->all());
+        if ($device->isActive()) {
+            $s = new SensorData($request->all());
+            return $device->sensordata()->save($s);
 
-        return $device->sensordata()->save($s);
-
+        } else {
+            return ' in some json  device is not active';
+        }
     }
 
     /**
      * Display the specified resource.
      *
      * @param  \App\Device $device
-     * @param  \DummyFullModelClass $DummyModelVariable
+     * @param SensorData $sensorData
      * @return \Illuminate\Http\Response
      */
-    public function show(Device $device, DummyModelClass $DummyModelVariable)
+    public function show(Device $device, SensorData $sensorData)
     {
-        //
+        return $device->sensordata;
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Device $device
-     * @param  \DummyFullModelClass $DummyModelVariable
+     * @param SensorData $sensorData
      * @return \Illuminate\Http\Response
+     * @internal param Device $device
      */
-    public function edit(Device $device, DummyModelClass $DummyModelVariable)
+    public function edit(SensorData $sensorData)
     {
         //
     }
@@ -93,24 +146,26 @@ class DeviceSensorDataController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  \App\Device $device
-     * @param  \DummyFullModelClass $DummyModelVariable
+     * @param SensorData $sensorData
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Device $device, DummyModelClass $DummyModelVariable)
+    public function update(Request $request, SensorData $sensorData)
     {
-        //
+        // TODO Update SensorDataValue   according to the action taken against  it
+        // as a false alarm or as a testing alarm   or a sensor fluctuation
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Device $device
-     * @param  \DummyFullModelClass $DummyModelVariable
+     * @param SensorData $sensorData
      * @return \Illuminate\Http\Response
+     * @internal param Device $device
      */
-    public function destroy(Device $device, DummyModelClass $DummyModelVariable)
+    public function destroy(SensorData $sensorData)
     {
-        //
+        //TODO: Softdelete the sensordata
+        //SensorData::destroy($sensorData);
     }
 }
