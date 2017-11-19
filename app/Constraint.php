@@ -11,7 +11,7 @@ class Constraint extends Model
 {
 
     protected $fillable = ['name', 'min', 'max'];
-
+    public $timestamps = false;
 
     public function device()
     {
