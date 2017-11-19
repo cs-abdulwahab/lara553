@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
         // $this->call(DeviceSeeder::class);
         // $this->call(SensorSeeder::class);
 
-        $this->call(IntrusionSeeder::class);
+        // $this->call(IntrusionSeeder::class);
+
+        $this->call(ConstraintSeeder::class);
 
         // $this->call(UsersTableSeeder::class);
         // $this->call(QuestionSeeder::class);
