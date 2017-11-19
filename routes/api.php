@@ -21,6 +21,10 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+
+
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
 
     return 'ok';
@@ -32,14 +36,17 @@ Route::post('register', 'UserController@register');
 Route::post('login', 'Auth\UserLoginController@login');
 //Route::post('logout', 'Auth\LoginController@logout');*/
 
+// Send Data On Server
 Route::post('device/{devicekey}/sensordata', 'DeviceSensorDataController@home')->name('hardsensor.save');
+
+
 Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
 
     Route::get('/', 'HomeController@push');
+    Route::get('alldevicesdata', 'DeviceController@allDevicesSensorData');
 
-
-
-    Route::get('/trigger', function () {
+/*
+    Route::post('/trigger', function () {
 
         $s = SensorData::first();
 
@@ -51,7 +58,7 @@ Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
 
         return $ss;
 
-    });
+    });*/
 
 
     Route::get('device/{device}/currenttemp', 'DeviceSensorDataController@currenttemp');
