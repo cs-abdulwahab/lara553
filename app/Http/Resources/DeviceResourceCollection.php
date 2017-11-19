@@ -43,7 +43,6 @@ class DeviceResourceCollection extends ResourceCollection
                     'user_id' => $device->user_id,
                     'devicekey' => $device->devicekey,
 
-
                     'temp_n_humidity' => $sarray,
 
                     'metadata' => $sensordata,

@@ -45,6 +45,11 @@ class Device extends Model
         return false;
     }
 
+    public function constraints()
+    {
+        return $this->hasMany(Constaint::class);
+    }
+
 
     public function sensordata()
     {

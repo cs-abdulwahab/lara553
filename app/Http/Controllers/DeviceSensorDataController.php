@@ -6,11 +6,13 @@ use App\Events\SensorEvent;
 use App\Http\Resources\SensorDataResource;
 use App\Http\Resources\SensorDataResourceCollection;
 use App\SensorData;
+use App\User;
 use Carbon\Carbon;
 use DummyFullModelClass;
 use App\Device;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DeviceSensorDataController extends Controller
@@ -28,7 +30,6 @@ class DeviceSensorDataController extends Controller
 
         return $data;
 
-
     }
 
 
@@ -40,19 +41,17 @@ class DeviceSensorDataController extends Controller
      */
     public function index(Device $device)
     {
+        //TODO : Instead of taking the last  3 values of the the device
+        $ar = $device->sensordata->reverse()->take(3);
 
-        $ar = $device->sensordata->take(3)->reverse();
-
+        //return $ar;
 
         return new SensorDataResourceCollection($ar);
 
-//        dd($ar);
         //return Collection::unwrap($ar  );
 
-        return $ar;
+
         //      return SensorData::where('device_id','33')->get();
-
-
     }
 
     /**
@@ -80,7 +79,7 @@ class DeviceSensorDataController extends Controller
                 $sensorvalues = $device->sensordata()->save($s);
 
 
-                //TODO: on every device save data  SEND data of all the devices
+               //TODO: on every device save data  SEND data of all the devices
                 event(new SensorEvent(new  SensorDataResource($sensorvalues)));
 
                 return $sensorvalues;
