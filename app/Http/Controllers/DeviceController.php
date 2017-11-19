@@ -36,20 +36,9 @@ class DeviceController extends Controller
     {
 
         $user = Auth::user();
-
-        //TODO:  Return all devices of the user along with their latest temp values
         return new DeviceResourceCollection($user->devices);;
 
     }
-
-    /*
-        public function registerDevice(User $user, Request $request)
-        {
-            ['devicekey', 'name', 'status', 'user_id'];
-
-            return 'register device' . $user->email;
-        }*/
-
 
     /**
      * Show the form for creating a new resource.
