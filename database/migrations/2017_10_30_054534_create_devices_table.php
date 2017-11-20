@@ -23,7 +23,7 @@ class CreateDevicesTable extends Migration
             $table->unsignedInteger('user_id');
             // Registeration Date
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('devicetype')->references('id')->on('device_types')->onDelete('cascade');
 
             $table->timestamps();
         });
