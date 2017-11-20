@@ -47,7 +47,7 @@ class Device extends Model
 
     public function constraints()
     {
-        return $this->hasMany(Constaint::class);
+        return $this->hasMany(Constraint::class);
     }
 
 
